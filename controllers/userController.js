@@ -18,9 +18,7 @@ export const createUserInfo = async (req, res) => {
 
         res.status(201).json(userInfo);
     } catch (error) {
-        if (error.code === 'P2002') {
-            return res.status(400).json({ error: 'Email already exists' });
-        }
+        console.log(error)
         res.status(500).json({ error: 'Error creating user info' });
     }
 };

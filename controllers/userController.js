@@ -32,3 +32,26 @@ export const getAllUserInfo = async (req, res) => {
         res.status(500).json({ error: 'Error fetching user info' });
     }
 };
+
+
+export const checkUserInfoExists = async (req, res) => {
+  try {
+    const { email } = req.query;
+    if (!email) {
+      return res.status(400).json({ error: 'Email query param required' });
+    }
+
+    const user = await prisma.userInfo.findUnique({
+      where: { email }
+    });
+
+    if (user) {
+      res.json({ exists: true });
+    } else {
+      res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error('Error checking user info', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

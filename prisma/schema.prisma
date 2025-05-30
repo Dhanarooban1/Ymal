@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+   provider = "postgresql"
+   url      = env("DATABASE_URL")
+   directUrl = env("DIRECT_URL")
+}
+
+model UserInfo {
+  id                String   @id @default(uuid())
+  name             String
+  email            String   @unique
+  role             String   // Backend Developer, API/Product Engineer, etc.
+  yamlFamiliarity  String   // Beginner, Intermediate, Advanced
+  useCases         String[] // Array of use cases they selected
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
